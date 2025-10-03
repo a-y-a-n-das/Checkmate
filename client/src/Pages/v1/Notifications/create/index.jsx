@@ -56,6 +56,8 @@ const CreateNotifications = () => {
 	const [notification, setNotification] = useState({
 		notificationName: "",
 		address: "",
+		botToken: "",
+		chatId: "",
 		type: NOTIFICATION_TYPES[0]._id,
 	});
 	const [errors, setErrors] = useState({});
@@ -79,6 +81,17 @@ const CreateNotifications = () => {
 			...notification,
 			type: getNotificationTypeValue(notification.type),
 		};
+
+		// For Telegram, store botToken and chatId in config
+		if (form.type === "telegram") {
+			form.config = {
+				botToken: form.botToken,
+				chatId: form.chatId,
+			};
+			// Clear individual fields as they're now in config
+			delete form.botToken;
+			delete form.chatId;
+		}
 
 		let error = null;
 
@@ -130,6 +143,17 @@ const CreateNotifications = () => {
 			...notification,
 			type: getNotificationTypeValue(notification.type),
 		};
+
+		// For Telegram, store botToken and chatId in config
+		if (form.type === "telegram") {
+			form.config = {
+				botToken: form.botToken,
+				chatId: form.chatId,
+			};
+			// Clear individual fields as they're now in config
+			delete form.botToken;
+			delete form.chatId;
+		}
 
 		let error = null;
 
@@ -223,15 +247,38 @@ const CreateNotifications = () => {
 						<Typography component="p">{t(DESCRIPTION_MAP[type])}</Typography>
 					</Box>
 					<Stack gap={theme.spacing(12)}>
-						<TextInput
-							label={t(LABEL_MAP[type])}
-							name="address"
-							placeholder={t(PLACEHOLDER_MAP[type])}
-							value={notification.address}
-							onChange={onChange}
-							error={Boolean(errors.address)}
-							helperText={errors["address"]}
-						/>
+						{type === "telegram" ? (
+							<>
+								<TextInput
+									label={t("createNotifications.telegramSettings.botTokenLabel")}
+									name="botToken"
+									placeholder={t("createNotifications.telegramSettings.botTokenPlaceholder")}
+									value={notification.botToken || ""}
+									onChange={onChange}
+									error={Boolean(errors.botToken)}
+									helperText={errors["botToken"]}
+								/>
+								<TextInput
+									label={t("createNotifications.telegramSettings.chatIdLabel")}
+									name="chatId"
+									placeholder={t("createNotifications.telegramSettings.chatIdPlaceholder")}
+									value={notification.chatId || ""}
+									onChange={onChange}
+									error={Boolean(errors.chatId)}
+									helperText={errors["chatId"]}
+								/>
+							</>
+						) : (
+							<TextInput
+								label={t(LABEL_MAP[type])}
+								name="address"
+								placeholder={t(PLACEHOLDER_MAP[type])}
+								value={notification.address}
+								onChange={onChange}
+								error={Boolean(errors.address)}
+								helperText={errors["address"]}
+							/>
+						)}
 					</Stack>
 				</ConfigBox>
 

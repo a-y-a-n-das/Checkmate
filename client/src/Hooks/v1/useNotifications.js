@@ -105,6 +105,12 @@ const useGetNotificationById = (id, setNotification) => {
 				type: NOTIFICATION_TYPES.find((type) => type.value === notification?.type)?._id,
 			};
 
+			// Handle Telegram-specific fields
+			if (notification?.type === "telegram" && notification?.config) {
+				notificationData.botToken = notification.config.botToken || "";
+				notificationData.chatId = notification.config.chatId || "";
+			}
+
 			setNotification(notificationData);
 		} catch (error) {
 			setError(error);
