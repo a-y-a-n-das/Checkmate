@@ -37,6 +37,14 @@ class NotificationService {
 			const response = await this.networkService.requestWebhook(type, address, body);
 			return response.status;
 		}
+		if (type === "telegram") {
+			const response = await this.networkService.requestTelegram({
+				message: content,
+				botToken: notification.config?.botToken || address,
+				chatId: notification.config?.chatId,
+			});
+			return response.status;
+		}
 		if (type === "pager_duty") {
 			const response = await this.networkService.requestPagerDuty({
 				message: content,

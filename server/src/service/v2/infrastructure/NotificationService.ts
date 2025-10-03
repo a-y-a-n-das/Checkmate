@@ -1,6 +1,6 @@
 import UserService from "../business/UserService.js";
 import { IMonitor, NotificationChannel } from "../../../db/v2/models/index.js";
-import { EmailService, SlackService, DiscordService, WebhookService } from "./NotificationServices/index.js";
+import { EmailService, SlackService, DiscordService, WebhookService, TelegramService } from "./NotificationServices/index.js";
 
 const SERVICE_NAME = "NotificationServiceV2";
 export interface INotificationService {
@@ -13,6 +13,7 @@ class NotificationService implements INotificationService {
 	private slackService: SlackService;
 	private discordService: DiscordService;
 	private webhookService: WebhookService;
+	private telegramService: TelegramService;
 	private userService: UserService;
 
 	constructor(userService: UserService) {
@@ -21,6 +22,7 @@ class NotificationService implements INotificationService {
 		this.slackService = new SlackService();
 		this.discordService = new DiscordService();
 		this.webhookService = new WebhookService();
+		this.telegramService = new TelegramService();
 	}
 
 	handleNotifications = async (monitor: IMonitor) => {
@@ -49,6 +51,9 @@ class NotificationService implements INotificationService {
 					break;
 				case "webhook":
 					await this.webhookService.sendMessage(this.webhookService.buildAlert(monitor), channel);
+					break;
+				case "telegram":
+					await this.telegramService.sendMessage(this.telegramService.buildAlert(monitor), channel);
 					break;
 				default:
 					console.warn(`Unknown notification channel type: ${channel.type}`);

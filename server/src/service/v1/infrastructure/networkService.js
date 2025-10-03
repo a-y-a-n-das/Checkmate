@@ -524,6 +524,46 @@ class NetworkService {
 			throw error;
 		}
 	}
+
+	async requestTelegram({ message, botToken, chatId }) {
+		try {
+			const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+			
+			const response = await this.axios.post(telegramApiUrl, {
+				chat_id: chatId,
+				text: message,
+				parse_mode: "Markdown",
+				disable_web_page_preview: false,
+			}, {
+				headers: {
+					"Content-Type": "application/json",
+				},
+				timeout: 10000, // 10 second timeout
+			});
+
+			return {
+				type: "telegram",
+				status: true,
+				code: response.status,
+				message: "Successfully sent Telegram notification",
+				payload: response.data,
+			};
+		} catch (error) {
+			this.logger.warn({
+				message: error.message,
+				service: this.SERVICE_NAME,
+				method: "requestTelegram",
+			});
+
+			return {
+				type: "telegram",
+				status: false,
+				code: error.response?.status || this.NETWORK_ERROR,
+				message: "Failed to send Telegram notification",
+				payload: error.response?.data,
+			};
+		}
+	}
 }
 
 export default NetworkService;

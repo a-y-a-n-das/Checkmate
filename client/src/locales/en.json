@@ -735,6 +735,14 @@
 			"webhookLabel": "Webhook URL",
 			"webhookPlaceholder": "https://your-server.com/webhook"
 		},
+		"telegramSettings": {
+			"title": "Telegram",
+			"description": "Configure your Telegram bot here",
+			"botTokenLabel": "Bot Token",
+			"botTokenPlaceholder": "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11",
+			"chatIdLabel": "Chat ID",
+			"chatIdPlaceholder": "-1001234567890"
+		},
 		"testNotification": "Test notification",
 		"dialogDeleteTitle": "Are you sure you want to delete this notification?",
 		"dialogDeleteConfirm": "Delete"
