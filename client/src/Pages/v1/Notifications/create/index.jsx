@@ -31,6 +31,9 @@ import {
 	PLACEHOLDER_MAP,
 } from "../utils.js";
 
+// Debug: Log the notification types to see if Telegram is included
+console.log("NOTIFICATION_TYPES:", NOTIFICATION_TYPES);
+
 // Setup
 
 const CreateNotifications = () => {
@@ -234,6 +237,10 @@ const CreateNotifications = () => {
 							value={notification.type}
 							onChange={onChange}
 						/>
+						{/* Debug: Show notification types count */}
+						<Typography variant="caption" color="text.secondary">
+							Available types: {NOTIFICATION_TYPES.length} (Telegram: {NOTIFICATION_TYPES.find(t => t.value === 'telegram') ? 'Yes' : 'No'})
+						</Typography>
 					</Stack>
 				</ConfigBox>
 				<ConfigBox>
