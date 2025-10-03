@@ -1,3 +1,4 @@
+// Notification types with Telegram support
 export const NOTIFICATION_TYPES = [
 	{ _id: 1, name: "E-mail", value: "email" },
 	{ _id: 2, name: "Slack", value: "slack" },
@@ -5,7 +6,7 @@ export const NOTIFICATION_TYPES = [
 	{ _id: 4, name: "Webhook", value: "webhook" },
 	{ _id: 5, name: "Discord", value: "discord" },
 	{ _id: 6, name: "Telegram", value: "telegram" },
-]; // Updated to include Telegram
+];
 
 export const TITLE_MAP = {
 	email: "createNotifications.emailSettings.title",

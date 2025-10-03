@@ -29,10 +29,12 @@ import {
 	DESCRIPTION_MAP,
 	LABEL_MAP,
 	PLACEHOLDER_MAP,
-} from "../utils.js";
+} from "../utils-new.js";
 
 // Debug: Log the notification types to see if Telegram is included
 console.log("NOTIFICATION_TYPES:", NOTIFICATION_TYPES);
+console.log("Telegram found:", NOTIFICATION_TYPES.find(t => t.value === 'telegram'));
+console.log("Total types:", NOTIFICATION_TYPES.length);
 
 // Setup
 
